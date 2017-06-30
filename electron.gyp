@@ -177,7 +177,7 @@
             'vendor/breakpad/breakpad.gyp:dump_syms#host',
           ],
         }],  # OS=="win"
-        ['OS=="linux"', {
+        ['OS=="linux" or os_bsd==1', {
           'copies': [
             {
               'variables': {
@@ -336,7 +336,7 @@
             'atom/common/crash_reporter/crash_reporter_mac.mm',
           ],
         }],  # OS=="mac" and mas_build==1
-        ['OS=="linux"', {
+        ['OS=="linux" or os_bsd==1', {
           'sources': [
             '<@(lib_sources_linux)',
             '<@(lib_sources_nss)',

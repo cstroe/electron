@@ -7,7 +7,6 @@
     # Tell crashpad to build as external project.
     'crashpad_dependencies': 'external',
     # Required by breakpad.
-    'os_bsd': 0,
     'chromeos': 0,
     # Reflects node's config.gypi.
     'component%': 'static_library',
@@ -44,6 +43,13 @@
     'v8_postmortem_support': 'false',
     'v8_enable_i18n_support': 'false',
     'v8_inspector': 'false',
+    'conditions': [
+      ['OS=="freebsd" or OS=="openbsd" or OS=="netbsd"', {
+        'os_bsd': 1,
+      }, {
+        'os_bsd': 0,
+      }],
+    ],
   },
   # Settings to compile node under Windows.
   'target_defaults': {
@@ -107,7 +113,7 @@
           ],
         },
         'conditions': [
-          ['OS=="linux"', {
+          ['OS=="linux" or os_bsd==1', {
             'cflags': [
               '-Wno-parentheses-equality',
               '-Wno-unused-function',
@@ -159,7 +165,7 @@
               '-lshlwapi.lib',
             ],
           }],
-          ['OS=="linux" and libchromiumcontent_component==0', {
+          ['(OS=="linux" or os_bsd==1) and libchromiumcontent_component==0', {
             # Prevent the linker from stripping symbols.
             'ldflags': [
               '-Wl,--whole-archive',
@@ -215,7 +221,7 @@
               ],
             },
           }],  # OS=="mac"
-          ['OS=="linux"', {
+          ['OS=="linux" or os_bsd==1', {
             'cflags': [
               '-Wno-empty-body',
             ],

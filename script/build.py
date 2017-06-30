@@ -22,6 +22,9 @@ def main():
   ninja = os.path.join('vendor', 'depot_tools', 'ninja')
   if sys.platform == 'win32':
     ninja += '.exe'
+  elif 'bsd' in sys.platform:
+    # There's no prebuild ninja in vendor for *BSD, use system copy
+    ninja = '/usr/local/bin/ninja'
 
   args = parse_args()
   for config in args.configuration:

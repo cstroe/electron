@@ -11,12 +11,14 @@ BASE_URL = os.getenv('LIBCHROMIUMCONTENT_MIRROR') or \
 LIBCHROMIUMCONTENT_COMMIT = os.getenv('LIBCHROMIUMCONTENT_COMMIT') or \
     '4a0e32606e52c12c50c2e3a0973d015d8cdff494'
 
-PLATFORM = {
-  'cygwin': 'win32',
-  'darwin': 'darwin',
-  'linux2': 'linux',
-  'win32': 'win32',
-}[sys.platform]
+if sys.platform == 'cygwin' or sys.platform == 'win32':
+  PLATFORM = 'win32'
+elif sys.platform == 'darwin':
+  PLATFORM = 'darwin'
+elif sys.platform == 'linux2':
+  PLATFORM = 'linux'
+elif 'bsd' in sys.platform:
+  PLATFORM = 'bsd'
 
 verbose_mode = False
 
