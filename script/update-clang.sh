@@ -3,6 +3,11 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+# *BSD use custom patch version, so do not need update/build here
+if uname -s | grep -i -q 'bsd'; then
+  exit 0
+fi
+
 # This script will check out llvm and clang into third_party/llvm and build it.
 
 # Do NOT CHANGE this if you don't know what you're doing -- see
