@@ -9,12 +9,14 @@ import sys
 BASE_URL = os.getenv('LIBCHROMIUMCONTENT_MIRROR') or \
     'https://s3.amazonaws.com/github-janky-artifacts/libchromiumcontent'
 
-PLATFORM = {
-  'cygwin': 'win32',
-  'darwin': 'darwin',
-  'linux2': 'linux',
-  'win32': 'win32',
-}[sys.platform]
+if sys.platform == 'cygwin' or sys.platform == 'win32':
+  PLATFORM = 'win32'
+elif sys.platform == 'darwin':
+  PLATFORM = 'darwin'
+elif sys.platform == 'linux2':
+  PLATFORM = 'linux'
+elif 'bsd' in sys.platform:
+  PLATFORM = 'bsd'
 
 verbose_mode = False
 
